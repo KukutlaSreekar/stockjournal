@@ -7,6 +7,7 @@ path = "data.db"
 
 class User:
     def __init__(self):
+        # Creating database if it doesn't exists
         if not os.path.exists(path):
             conn_1 = sqlite3.connect(path)
             cursor_1 = conn_1.cursor()
@@ -20,13 +21,13 @@ class User:
         self.cursor = self.connection.cursor()
 
     def write(self, data_values):
+        # Writing the data into the database (for the add method in gui)
         data_values = list(data_values.values())[:6]
-        data_values
         self.cursor.execute("INSERT INTO stocks_history VALUES(?,?,?,?,?,?)", data_values)
         self.connection.commit()
 
     def read(self):
-        # To read everything in the database
+        # To read data in the database
         self.cursor.execute("SELECT * FROM stocks_history")
         data = self.cursor.fetchall()
         return data
@@ -48,9 +49,8 @@ class User:
             sell_data = self.cursor.fetchall()
             return sell_data
 
-
-
     def delete(self, values):
+        # Deleting the required data
         row_to_delete = values["data_box"][0]
         self.cursor.execute("DELETE FROM stocks_history WHERE Stock_Name=? AND Stock_Code=? AND Stock_Price=? AND "
                             "Trade_Type=? AND Quantity=? AND DATE=?", row_to_delete)

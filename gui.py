@@ -41,6 +41,7 @@ class Gui:
                 break
             if event == "add_to_journal":
                 self.user.write(values)
+                # Updating the data in the data box in main gui
                 window1['data_box'].update(values=self.user.read())
             if event == "delete":
                 try:
